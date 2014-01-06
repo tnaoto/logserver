@@ -1,0 +1,13 @@
+<source>
+  type forward
+  port 24224
+</source>
+
+<match mongo.apache>
+  type mongo
+  database apache
+  flush_interval 10s
+  collection access
+  host 127.0.0.1
+  port 27017
+</match>

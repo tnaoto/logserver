@@ -7,11 +7,16 @@
 # All rights reserved - Do Not Redistribute
 #
 
-package "apache" do
+package "httpd" do
   action :install
 end
 
-service "apache" do
+directory "/var/log/httpd" do
+ mode "0755"
+end
+
+service "httpd" do
   supports :status => true, :restart => true, :reload => true
   action   [ :enable, :start ]
 end
+

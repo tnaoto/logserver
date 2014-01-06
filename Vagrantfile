@@ -3,6 +3,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  
   config.vm.define :logserver do |log|
+    log.vm.network :private_network, ip:"192.168.1.12"
     log.vm.box = "CentOS65"
     
     log.omnibus.chef_version = :latest
@@ -20,12 +21,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.run_list = [
         "yum",
         "mongodb",
-        "tdagent"
+        "tdagent",
+        "tdagent::install-plugin-mongodb",
+        "tdagent::receive" 
       ]
     end
   end
 
   config.vm.define :webserver do |web|
+    web.vm.network :private_network, ip:"192.168.1.11"
     web.vm.box = "CentOS65"
     
     web.omnibus.chef_version = :latest
@@ -37,11 +41,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.vm.provision :chef_solo do |chef|
       chef.cookbooks_path = ["cookbooks","site-cookbooks"]
       chef.add_recipe "yum"
-      chef.add_recipe "nginx"
-      
+      chef.add_recipe "apache"
+      chef.add_recipe "tdagent"
+            
       chef.run_list = [
         "yum",
-        "nginx"
+        "apache",
+        "tdagent",
+        "tdagent::send"
       ]
     end
   end
