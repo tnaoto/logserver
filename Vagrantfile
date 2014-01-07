@@ -20,11 +20,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       
       chef.run_list = [
         "yum",
-        "mongodb",
+        "elasticsearch",
+        "kibana",
         "tdagent",
-        "tdagent::install-plugin-mongodb",
+        "tdagent::install-plugin-elasticsearch",
         "tdagent::receive" 
       ]
+      chef.json = {
+        java: {install_flavor: "openjdk"},
+        java: {jdk_version: "7"},
+        elasticsearch: {version: "0.90.9"}
+      }
+      
     end
   end
 

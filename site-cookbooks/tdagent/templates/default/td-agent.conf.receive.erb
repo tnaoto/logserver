@@ -3,11 +3,12 @@
   port 24224
 </source>
 
-<match mongo.apache>
-  type mongo
-  database apache
-  flush_interval 10s
-  collection access
+<match *.apache>
+  type elasticsearch
+  include_tag_key true
+  tag_key @log_name
   host 127.0.0.1
-  port 27017
+  port 9200
+  logstash_format true
+  flush_interval 10s
 </match>

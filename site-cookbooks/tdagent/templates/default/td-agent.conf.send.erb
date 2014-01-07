@@ -2,10 +2,10 @@
   type tail
   format apache
   path /var/log/httpd/access_log
-  tag mongo.apache
+  tag log.apache
 </source>
 
-<match mongo.apache>
+<match *.apache>
   type forward
   flush_interval 10s
   <server>
