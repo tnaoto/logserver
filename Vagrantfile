@@ -26,12 +26,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "tdagent::install-plugin-elasticsearch",
         "tdagent::receive" 
       ]
-      chef.json = {
-        java: {install_flavor: "openjdk"},
-        java: {jdk_version: "7"},
-        elasticsearch: {version: "0.90.9"}
-      }
-      
     end
   end
 
